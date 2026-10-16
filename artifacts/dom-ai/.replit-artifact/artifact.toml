@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Dom AI"
+description = "A mobile-first AI chat interface designed for iPhone-sized screens, with a local placeholder reply system for testing and no paid services required."
+version = "1.0.0"
+id = "artifacts/dom-ai"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 26145
+
+[services.development]
+run = "pnpm --filter @workspace/dom-ai run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/dom-ai", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/dom-ai/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "26145"
+BASE_PATH = "/"
